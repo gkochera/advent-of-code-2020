@@ -13,34 +13,42 @@ int main(int argc, const char * argv[]) {
     
     // open the file
     FILE *fp;
-    fp = fopen("day1part1.txt", "r"); // returns a pointer to the file
+    fp = fopen("day3part1.txt", "r"); // returns a pointer to the file
     if (fp == NULL) {
         perror("File not found");
         return(1);
     }
     
     // set up the number array, badly
-    int num_arr[10000];
+    char char_arr[323][32];
     int index = 0;
     int number_of_items_read = 0;
     
     // read the numbers
-    while (fscanf(fp, "%i", &num_arr[index]) == 1) {
+    while (fscanf(fp, "%s\n", char_arr[index]) == 1) {
         index++;
         number_of_items_read++;
     }
-    
-    // report the numbers read
-    printf("Numbers Read: %i\n", number_of_items_read);
-    
-    for (int i = 0; i < number_of_items_read; i++) {
-        for (int j = i + 1; j <= number_of_items_read; j++) {
-            int total = num_arr[i] + num_arr[j];
-            if (total == 2020) {
-                printf("%i + %i = 2020\n", num_arr[i], num_arr[j]);
-                printf("%i + %i = %i\n", num_arr[i], num_arr[j], num_arr[i] * num_arr[j]);
-            }
+    int ground = 0, trees = 0;
+    int x = 0, y = 0;
+    while (y < 324) {
+        if ( char_arr[y][x] == '.' ) {
+            ground++;
+        } else {
+            trees++;
+        }
+        y++;
+        x += 3;
+        if ( x > 31 ) {
+            x %= 31;
         }
     }
+    
+    printf("Trees: %i\nGround: %i\n", trees, ground);
+    
+    // report the numbers read
+    printf("Lines Read: %i\n", number_of_items_read);
+    printf("%c\n", char_arr[0][31]);
+    
     return 0;
 }
